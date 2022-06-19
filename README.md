@@ -45,7 +45,7 @@ Spring, SpringBoot, JPA를 통한 웹페이지 서버 개발과 ***서버를 통
   - #### API 스펙에 맞춘 DTO를 만들어줬어요! (재사용성과 API스펙을 명확히 해줘요!)
   - #### ToOne 관계에 대해 Fetch join을 사용했어요! (쿼리의 효율을 높여주고 페이징도 사용할 수 있어요!)
   - #### BatchSize를 사용해줬어요!(컬렉션 연관관계에서 쿼리 효율을 높여줘요!)
-  - #### 예외 처리는 @ExceptionHandler를 사용했어요! ()
+  - #### 예외 처리는 @ExceptionHandler를 사용했어요!
 - ### REST API 통신 예시
   - #### Postman을 통해 클라이언트에서 서버로 데이터 요청을 해요!
   - #### Request1: VIP가 올린 게시물을 조회해주세요!
