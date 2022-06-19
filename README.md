@@ -55,7 +55,7 @@ Spring, SpringBoot, JPA를 통한 웹페이지 서버 개발과 ***서버를 통
   - - ##### @Getmapping(/posts/likes) 요청에 게시물의 제목, 내용 데이터로 응답해요. count를 변수로 받아 기준이 되는 좋아요 수를 정해줘요! (단 count의 기본 값은 0이에요!)
   - - - ![REST2](https://user-images.githubusercontent.com/87487149/174484061-940ca7a8-636d-41da-80b1-d9d0ce6ffe41.gif)
 
-## 프로젝트 실행 시 주의사항
+## 😄프로젝트 실행 시 주의사항
 ![Validation 회원 가입_2](https://user-images.githubusercontent.com/87487149/174486591-14d8148f-3c77-4986-8ff8-2dd7db5cb3bb.gif)
  - #### 1. ddl-auto를 create로 바꾼 후 먼저 한번 실행해야 이유: Board 엔티티에 대해 People보드 Place보드 Video보드를 init데이터로 만들어주는데 이는 Board의 생성은 오직 관리자만 해주게 하기 위함입니다. 단 재시작했을때 게시물 데이터가 하나도 없으므로 화면이 비어보이는 것에 대해서는 데이터를 추가하면 해결될 문제이므로 걱정하지 않아도 됩니다!
  - #### 2. ddl-auto를 none으로 바꾼 후 재실행하는 이유: create로 ddl-auto를 두면 재 시작 할때마다 모든 데이터가 초기화되기 때문입니다!
