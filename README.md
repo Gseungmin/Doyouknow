@@ -24,14 +24,14 @@ Spring, SpringBoot, JPA를 통한 웹페이지 서버 개발과 ***서버를 통
 - ### MULTIPART/FORM-DATA
   - #### 게시물에 정보뿐 아니라 이미지까지 함께 등록할 수 있어요!
   - ![첨부파일](https://user-images.githubusercontent.com/87487149/174478716-bfff709c-0284-4325-bed0-e63313651e73.gif)
-- ### Cookie, Session
+- ### COOKIE, SESSION
   - #### HttpRequestMethod가 제공하는 Session기능을 통해 로그인 상태를 유지 시켜줬어요!
   - ![쿠키세션](https://user-images.githubusercontent.com/87487149/174479073-6607e5f3-7313-44e0-8815-c4f67a0c30a0.gif)
 - ### SORT
   - #### 게시물 정렬을 통해 좋아요가 가장 많은 게시물이 표지로 가요!
   - ![정렬](https://user-images.githubusercontent.com/87487149/174479553-7d9d4ce6-bdc2-4d78-9ed7-43edc3a01398.gif)
   - 사용자 해당 게시물에 좋아요나 싫어요 하나만 누를 수 있도록 구현해줬어요!
-- ### ExceptionHandle
+- ### EXCEPTIONHANDLE
   - #### Spring Boot가 제공하는 BasicErrorController를 사용했어요!
   - ![에러](https://user-images.githubusercontent.com/87487149/174480273-f46dd2ca-d12b-4b85-b626-40ee2dd46aa9.gif)
   - 해당 view만 만들고 경로에 정해주면 따로 Error 처리 컨트롤러를 만들지 않아요!
