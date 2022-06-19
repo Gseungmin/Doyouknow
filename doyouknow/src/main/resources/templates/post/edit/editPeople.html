@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        /* Padding below the footer and lighter body text */
+        body {
+            padding-top: 5rem;
+            padding-bottom: 3rem;
+            color: #5a5a5a;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:onclick="|location.href='@{/}'|">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="nav-link text-white-50 bg-dark border-0" th:onclick="|location.href='@{/logout}'|" type="submit">logout</button>
+                        </form>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Upload
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/upload/person}">Person</a></li>
+                            <li><a class="dropdown-item" th:href="@{/upload/place}">Place</a></li>
+                            <li><a class="dropdown-item" th:href="@{/upload/video}">Video</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/myPage}">MyPage</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body class="bg-light">
+    <div class="container">
+        <main>
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3">Information</h4>
+                    <form th:action th:object="${newPost}" method="post" enctype="multipart/form-data">
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="name" class="form-label">name</label>
+                                <input type="text" class="form-control" id="name"th:errorclass="field-error" th:placeholder="${person.name}" th:field="*{name}">
+                                <div class="field-error" th:errors="*{name}" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="birth" class="form-label">birth</label>
+                                <input type="text" class="form-control" id="birth"th:errorclass="field-error" th:placeholder="${person.birth}" th:field="*{birth}">
+                                <div class="field-error" th:errors="*{birth}" />
+                            </div>
+                            <div class="col-12">
+                                <label for="content" class="form-label">content</label>
+                                <input type="text" th:field="*{content}" class="form-control" id="content"th:errorclass="field-error" th:placeholder="${person.content}">
+                                <div class="field-error" th:errors="*{content}" />
+                            </div>
+                            <div th:if="${#fields.hasGlobalErrors()}">
+                                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+                            </div>
+                            <div class="input-group"><input type="file" class="w-100" name="imageFile"></div>
+                            <hr class="my-4">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script src="form-validation.js"></script>
+</body>
+</html>
