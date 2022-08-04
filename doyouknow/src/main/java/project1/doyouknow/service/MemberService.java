@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project1.doyouknow.domain.member.Member;
-import project1.doyouknow.repository.MemberRepository;
+import project1.doyouknow.repository.MemberSpringJpaRepository;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemberSpringJpaRepository memberRepository;
 
     public Optional<Member> login(String loginId, String password) {
         Optional<Member> findMember = memberRepository.findByLoginId(loginId);
@@ -32,6 +32,10 @@ public class MemberService {
     public Optional<Member> findAnyByNickname(String nickname) {
         Optional<Member> findMember = memberRepository.findByNickname(nickname);
         return findMember;
+    }
+
+    public Optional<Member> findById(Long id){
+        return memberRepository.findById(id);
     }
 
     public void join(Member member) {

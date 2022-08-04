@@ -10,114 +10,105 @@ import org.springframework.web.multipart.MultipartFile;
 import project1.doyouknow.domain.image.FileStore;
 import project1.doyouknow.domain.image.Image;
 import project1.doyouknow.domain.image.ImageForm;
+import project1.doyouknow.domain.member.Member;
 import project1.doyouknow.domain.post.saveForm.Person;
 import project1.doyouknow.domain.post.saveForm.Place;
 import project1.doyouknow.domain.post.saveForm.Video;
+import project1.doyouknow.service.MemberService;
 import project1.doyouknow.service.PostService;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class UploadController {
 
+    private final MemberService memberService;
     private final PostService postService;
     private final FileStore fileStore;
 
-    @GetMapping("/upload/person")
-    public String uploadPersonForm(@ModelAttribute("person") Person person, Model model, ImageForm imageForm)
-    {
-        model.addAttribute("form", imageForm);
-        return "post/upload/uploadPeople";
-    }
-
-    @GetMapping("/upload/person/login")
-    public String uploadPersonLoginForm(@RequestParam String loginId, @ModelAttribute("person") Person person, Model model,
+    @GetMapping("/upload/person/{memberId}")
+    public String uploadPersonForm(@PathVariable("memberId") Long memberId, @ModelAttribute("person") Person person, Model model,
                                         @ModelAttribute("form") ImageForm imageForm, @ModelAttribute("image") Image image)
     {
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         return "post/upload/uploadPeople";
     }
 
-    @PostMapping("/upload/person/login")
-    public String uploadPerson(@RequestParam String loginId,
+    @PostMapping("/upload/person/{memberId}")
+    public String uploadPerson(@PathVariable("memberId") Long memberId,
                                @Validated @ModelAttribute("person") Person person, BindingResult bindingResult,
                                Model model, @ModelAttribute("form") ImageForm imageForm,
                                @ModelAttribute("image") Image image) throws IOException {
         if (bindingResult.hasErrors()) {
             return "post/upload/uploadPeople";}
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         MultipartFile multipartFile = imageForm.getImageFile();
         if (multipartFile.isEmpty()) {
             bindingResult.reject("AttachFail","첨부파일을 등록해주세요.");
             return "post/upload/uploadPeople";
         }
         fileStore.storeFile(multipartFile, image);
-        postService.makePerson(person, loginId, image);
+        postService.makePerson(person, member.getLoginId(), image);
         postService.upload(person);
         return "redirect:/";}
 
-    @GetMapping("/upload/place")
-    public String uploadPlaceForm(@ModelAttribute("place") Place place)
-    {
-        return "post/upload/uploadPlace";
-    }
-
-    @GetMapping("/upload/place/{loginId}")
-    public String uploadPlaceLoginForm(@RequestParam("loginId") String loginId, @ModelAttribute("place") Place place, Model model,
+    @GetMapping("/upload/place/{memberId}")
+    public String uploadPlaceForm(@PathVariable("memberId") Long memberId, @ModelAttribute("place") Place place, Model model,
                                        @ModelAttribute("form") ImageForm imageForm, @ModelAttribute("image") Image image)
     {
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         return "post/upload/uploadPlace";
     }
 
-    @PostMapping("/upload/place/{loginId}")
-    public String uploadPlace(@RequestParam("loginId") String loginId,
+    @PostMapping("/upload/place/{memberId}")
+    public String uploadPlace(@PathVariable("memberId") Long memberId,
                               @Validated @ModelAttribute("place") Place place, BindingResult bindingResult,
                               Model model,
                               @ModelAttribute("form") ImageForm imageForm, @ModelAttribute("image") Image image) throws IOException {
         if (bindingResult.hasErrors()) {
             return "post/upload/uploadPlace";}
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         MultipartFile multipartFile = imageForm.getImageFile();
         if (multipartFile.isEmpty()) {
             bindingResult.reject("AttachFail","첨부파일을 등록해주세요.");
             return "post/upload/uploadPlace";
         }
         fileStore.storeFile(multipartFile, image);
-        postService.makePlace(place, loginId, image);
+        postService.makePlace(place, member.getLoginId(), image);
         postService.upload(place);
         return "redirect:/";}
 
-    @GetMapping("/upload/video")
-    public String uploadVideoForm(@ModelAttribute("video") Video video)
-    {
-        return "post/upload/uploadVideo";
-    }
-
-    @GetMapping("/upload/video/{loginId}")
-    public String uploadVideoLoginForm(@RequestParam("loginId") String loginId, @ModelAttribute("video") Video video, Model model,
+    @GetMapping("/upload/video/{memberId}")
+    public String uploadVideoForm(@PathVariable("memberId") Long memberId, @ModelAttribute("video") Video video, Model model,
                                        @ModelAttribute("form") ImageForm imageForm, @ModelAttribute("image") Image image)
     {
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         return "post/upload/uploadVideo";
     }
 
-    @PostMapping("/upload/video/{loginId}")
-    public String uploadVideo(@RequestParam("loginId") String loginId,
+    @PostMapping("/upload/video/{memberId}")
+    public String uploadVideo(@PathVariable("memberId") Long memberId,
                               @Validated @ModelAttribute("video") Video video, BindingResult bindingResult,
                               Model model,
                               @ModelAttribute("form") ImageForm imageForm, @ModelAttribute("image") Image image) throws IOException {
         if (bindingResult.hasErrors()) {
             return "post/upload/uploadVideo";}
-        model.addAttribute("loginId", loginId);
+        Member member = memberService.findById(memberId).get();
+        model.addAttribute("member", member);
         MultipartFile multipartFile = imageForm.getImageFile();
         if (multipartFile.isEmpty()) {
             bindingResult.reject("AttachFail","첨부파일을 등록해주세요.");
             return "post/upload/uploadVideo";
         }
         fileStore.storeFile(multipartFile, image);
-        postService.makeVideo(video, loginId, image);
+        postService.makeVideo(video, member.getLoginId(), image);
         postService.upload(video);
         return "redirect:/";}
 }

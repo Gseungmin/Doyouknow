@@ -6,16 +6,16 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import project1.doyouknow.SessionConst;
-import project1.doyouknow.annotation.Login;
+import project1.doyouknow.annotation.MemberCheck;
 import project1.doyouknow.domain.member.Member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
+public class MemberCheckArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasParameterAnnotation = parameter.hasParameterAnnotation(Login.class);
+        boolean hasParameterAnnotation = parameter.hasParameterAnnotation(MemberCheck.class);
         boolean assignableFrom = Member.class.isAssignableFrom(parameter.getParameterType());
         return hasParameterAnnotation&&assignableFrom;
     }

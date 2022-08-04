@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         #show_sql: true
@@ -25,4 +25,4 @@ logging:
   charset:
     file:
 file:
-  dir: 'C:/Users/G/Desktop/Project/First/images/'
+  dir: 'C:/Users/G/Desktop/image/'

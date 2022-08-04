@@ -16,8 +16,9 @@ import project1.doyouknow.domain.post.saveForm.Person;
 import project1.doyouknow.domain.post.saveForm.Place;
 import project1.doyouknow.domain.post.saveForm.Post;
 import project1.doyouknow.domain.post.saveForm.Video;
-import project1.doyouknow.repository.MemberRepository;
-import project1.doyouknow.repository.PostRepository;
+import project1.doyouknow.repository.BoardSpringJpaRepository;
+import project1.doyouknow.repository.MemberSpringJpaRepository;
+import project1.doyouknow.repository.PostSpringJpaRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,8 +30,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class PostService {
 
-    private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
+    private final PostSpringJpaRepository postRepository;
+    private final MemberSpringJpaRepository memberRepository;
+    private final BoardSpringJpaRepository boardRepository;
     private final FileStore fileStore;
 
     public void upload(Post post) {
@@ -38,15 +40,15 @@ public class PostService {
     }
 
     public Post findPost(Long id) {
-        return postRepository.findById(id);
+        return postRepository.findById(id).get();
     }
 
     public List<Board> findBoardAll() {
-        return postRepository.findAllBoard();
+        return boardRepository.findAll();
     }
 
     public Optional<Board> findBoard(String type) {
-        List<Board> allBoard = postRepository.findAllBoard();
+        List<Board> allBoard = boardRepository.findAll();
         Optional<Board> B = allBoard.stream().filter(board -> board.getType().equals(type)).findFirst();
         return B;
     }

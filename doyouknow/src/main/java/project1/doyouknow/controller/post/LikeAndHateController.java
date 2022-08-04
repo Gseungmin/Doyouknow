@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import project1.doyouknow.SessionConst;
+import project1.doyouknow.annotation.MemberCheck;
 import project1.doyouknow.domain.board.Board;
 import project1.doyouknow.domain.member.Member;
 import project1.doyouknow.domain.post.saveForm.Post;
@@ -25,23 +26,19 @@ public class LikeAndHateController {
     private final PostService postService;
 
     @PostMapping("/like/{postId}")
-    public String likes(@PathVariable("postId")Long postId, HttpServletRequest request) {
+    public String likes(@PathVariable("postId")Long postId, @MemberCheck Member member) {
         Post post = postService.findPost(postId);
         Board board = post.getBoard();
         String boardName = board.getType();
-        HttpSession session = request.getSession(false);
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         likeService.clickLikes(member.getLoginId(),postId);
         return "redirect:/board/"+boardName;
     }
 
     @PostMapping("/hate/{postId}")
-    public String hates(@PathVariable("postId")Long postId, HttpServletRequest request) {
+    public String hates(@PathVariable("postId")Long postId, @MemberCheck Member member) {
         Post post = postService.findPost(postId);
         Board board = post.getBoard();
         String boardName = board.getType();
-        HttpSession session = request.getSession(false);
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         likeService.clickHates(member.getLoginId(),postId);
         return "redirect:/board/"+boardName;
     }
