@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import project1.doyouknow.annotation.Login;
-import project1.doyouknow.domain.board.Board;
+import project1.doyouknow.annotation.MemberCheck;
 import project1.doyouknow.domain.board.SortedBoardForm;
 import project1.doyouknow.domain.member.Member;
 import project1.doyouknow.service.PostService;
@@ -19,7 +18,7 @@ public class HomeController {
     private final PostService postService;
 
     @GetMapping("/")
-    public String home(@Login Member member, Model model)
+    public String home(@MemberCheck Member member, Model model)
     {
         List<SortedBoardForm> boards = postService.SortedBoardForHome();
 

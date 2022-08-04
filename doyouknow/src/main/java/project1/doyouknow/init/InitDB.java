@@ -60,7 +60,6 @@ public class InitDB {
             member.setPassword(password);
             member.setNickname(nickname);
             member.setLoginId(loginId);
-            member.setMembership(Membership.BASIC);
             return member;
         }
 

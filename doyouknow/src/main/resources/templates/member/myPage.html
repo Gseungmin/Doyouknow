@@ -51,13 +51,13 @@
                             Upload
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" th:href="@{/upload/person}">Person</a></li>
-                            <li><a class="dropdown-item" th:href="@{/upload/place}">Place</a></li>
-                            <li><a class="dropdown-item" th:href="@{/upload/video}">Video</a></li>
+                            <li><a class="dropdown-item" th:href="@{/upload/person/{memberId}(memberId=${member.id})}">Person</a></li>
+                            <li><a class="dropdown-item" th:href="@{/upload/place/{memberId}(memberId=${member.id})}">Place</a></li>
+                            <li><a class="dropdown-item" th:href="@{/upload/video/{memberId}(memberId=${member.id})}">Video</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/myPage/backUp/{memberId}(memberId=${member.loginId})}">backUp</a>
+                        <a class="nav-link" th:href="@{/myPage/backUp/{memberId}(memberId=${member.id})}">backUp</a>
                     </li>
                 </ul>
             </div>

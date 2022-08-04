@@ -3,30 +3,12 @@ package project1.doyouknow.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import project1.doyouknow.domain.board.Board;
-import project1.doyouknow.domain.board.SortedBoardForm;
-import project1.doyouknow.domain.image.FileStore;
-import project1.doyouknow.domain.image.Image;
 import project1.doyouknow.domain.likes.PostLikes;
 import project1.doyouknow.domain.member.Member;
-import project1.doyouknow.domain.post.editForm.PersonEditForm;
-import project1.doyouknow.domain.post.editForm.PlaceEditForm;
-import project1.doyouknow.domain.post.editForm.VideoEditForm;
-import project1.doyouknow.domain.post.saveForm.Person;
-import project1.doyouknow.domain.post.saveForm.Place;
 import project1.doyouknow.domain.post.saveForm.Post;
-import project1.doyouknow.domain.post.saveForm.Video;
-import project1.doyouknow.repository.LikeRepository;
-import project1.doyouknow.repository.MemberRepository;
-import project1.doyouknow.repository.PostRepository;
+import project1.doyouknow.repository.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +16,15 @@ import java.util.stream.Collectors;
 public class LikeService {
 
 
-    private final LikeRepository likeRepository;
-    private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
+    private final LikeSpringJpaRepository likeRepository;
+    private final PostSpringJpaRepository postRepository;
+    private final MemberSpringJpaRepository memberRepository;
 
     /**Like Post**/
     public void clickLikes(String loginId, Long postId) {
-        Post post = postRepository.findById(postId);
+        Optional<Post> OpPost = postRepository.findById(postId);
         Optional<Member> OpMember = memberRepository.findByLoginId(loginId);
+        Post post = OpPost.get();
         Member member = OpMember.get();
 
         Optional<PostLikes> OpLikes = member.getPostLikes().stream().filter(postLikes -> postLikes.getPost().getId().equals(postId)).findFirst();
@@ -76,8 +59,9 @@ public class LikeService {
 
     /**Hate Post**/
     public void clickHates(String loginId, Long postId) {
-        Post post = postRepository.findById(postId);
+        Optional<Post> OpPost = postRepository.findById(postId);
         Optional<Member> OpMember = memberRepository.findByLoginId(loginId);
+        Post post = OpPost.get();
         Member member = OpMember.get();
 
         Optional<PostLikes> OpLikes = member.getPostLikes().stream().filter(postLikes -> postLikes.getPost().getId().equals(postId)).findFirst();

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.doyouknow.SessionConst;
+import project1.doyouknow.annotation.MemberCheck;
 import project1.doyouknow.domain.board.Board;
 import project1.doyouknow.domain.comment.Comment;
 import project1.doyouknow.domain.member.Member;
@@ -28,25 +29,16 @@ public class BoardDetailController {
     private final CommentService commentService;
 
     @GetMapping("/board/{boardName}")
-    public String boardForm(@PathVariable("boardName") String boardName, Model model)
+    public String boardForm(@PathVariable("boardName") String boardName, Model model, @MemberCheck Member member)
     {
         Optional<Board> findBoard = postService.findBoard(boardName);
         Board board = findBoard.get();
         postService.SortedBoard(board);
         model.addAttribute("board", board);
-        return "post/contentPage";
-    }
-
-    @GetMapping("/board/{boardName}/login")
-    public String boardLoginForm(@PathVariable("boardName") String boardName, Model model,
-                                 @RequestParam String loginId)
-    {
-        Optional<Member> member = memberService.findAnyByLoginID(loginId);
-        Optional<Board> findBoard = postService.findBoard(boardName);
-        Board board = findBoard.get();
-        postService.SortedBoard(board);
-        model.addAttribute("member", member.get());
-        model.addAttribute("board", board);
+        if (member == null) {
+            return "post/contentPage";
+        }
+        model.addAttribute("member", member);
         return "post/contentPageLogin";
     }
 

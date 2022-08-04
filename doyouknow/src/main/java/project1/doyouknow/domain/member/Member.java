@@ -29,9 +29,6 @@ public class Member extends BaseEntity {
     @NotEmpty
     private String nickname;
 
-    @Enumerated(EnumType.STRING)
-    private Membership membership;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     private List<PostLikes> postLikes = new ArrayList<>();
 
@@ -45,32 +42,24 @@ public class Member extends BaseEntity {
     private int postCount;
 
     public void initMember() {
-        this.membership = Membership.BASIC;
+        this.deletePostCount = 0;
+        this.postCount = 0;
     }
+
     //Post 생성
     public void postCreate()
     {
         this.postCount++;
-        checkMembership();
     }
     //Post 삭제
     public void delete() {
         this.postCount--;
         this.deletePostCount++;
-        checkMembership();
     }
+
     //Post 백업
     public void create()
     {   this.postCount++;
         this.deletePostCount--;
-        checkMembership();
-    }
-
-    public void checkMembership() {
-        if (this.postCount >= 3) {
-            this.membership = Membership.VIP;
-        } else {
-            this.membership = Membership.BASIC;
-        }
     }
 }

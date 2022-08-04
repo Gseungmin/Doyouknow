@@ -41,7 +41,7 @@ public class MemberController {
         }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER,findMember.get());
-        return "redirect:" + requestURL;
+        return "redirect:/";
     }
 
     @GetMapping("/join")
@@ -54,13 +54,13 @@ public class MemberController {
         if (bindingResult.hasErrors()) {
             return "member/addMember";
         }
-        Optional<Member> findMember1 = memberService.findAnyByLoginID(member.getLoginId());
-        if (findMember1.isPresent()) {
+        Optional<Member> check1 = memberService.findAnyByLoginID(member.getLoginId());
+        if (check1.isPresent()) {
             bindingResult.reject("addFail", "이미 존재하는 아이디 입니다.");
             return "member/addMember";
         }
-        Optional<Member> findMember2 = memberService.findAnyByNickname(member.getNickname());
-        if (findMember2.isPresent()) {
+        Optional<Member> check2 = memberService.findAnyByNickname(member.getNickname());
+        if (check2.isPresent()) {
             bindingResult.reject("addFail2", "이미 존재하는 닉네임 입니다.");
             return "member/addMember";
         }
